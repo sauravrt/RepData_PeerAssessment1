@@ -145,7 +145,41 @@ Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minut
 
 
 ```r
-data.new.interval <- split(data.new$steps.filled, data.new$interval)
-steps.new.interval.mean <- ((lapply(data.new.interval, function(x) mean(x, na.rm = TRUE))))
+# Subset data based on daytype
+data.new.weekend <- subset(data.new, data.new$daytype == "weekend")
+data.new.weekday <- subset(data.new, data.new$daytype == "weekday")
+
+data.weekend.interval <- split(data.new.weekend$steps.filled, data.new.weekend$interval)
+weekend.interval.mean <- ((lapply(data.weekend.interval, function(x) mean(x, na.rm = TRUE))))
+intervals <- levels(as.factor(data.new.weekend$interval))
+#weekend.mean.steps <- unlist(weekend.interval.mean)
+```
+
+
+```r
+# Subset data based on daytype
+data.new.weekday <- subset(data.new, data.new$daytype == "weekday")
+
+data.weekday.interval <- split(data.new.weekday$steps.filled, data.new.weekday$interval)
+weekday.interval.mean <- ((lapply(data.weekday.interval, function(x) mean(x, na.rm = TRUE))))
+intervals <- levels(as.factor(data.new.weekday$interval))
+#weekend.mean.steps <- unlist(weekend.interval.mean)
+
+par(mfrow=c(2,1)) 
+plot(x = intervals , y = unlist(weekday.interval.mean), type = 'l', xlab = "interval", ylab = "avg. steps", ylim = c(0, 200)) + title("weekday")
+```
+
+```
+## numeric(0)
+```
+
+```r
+plot(x = intervals , y = unlist(weekend.interval.mean), type = 'l', xlab = "interval", ylab = "avg. steps", ylim = c(0, 200)) + title("weekend")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-10-1.png) 
+
+```
+## numeric(0)
 ```
 
